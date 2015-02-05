@@ -23,8 +23,9 @@ import java.util.List;
 */
 public class ToDoFragment extends ListFragment {
     private static final int REQUEST_CODE_CREATE_TASK = 0;
-    ListView mListViewTasks;
-    ArrayAdapter<Task> mAdapter;
+    private ListView mListViewTasks;
+    private ArrayAdapter<Task> mAdapter;
+    private List<Task> tasks = new ArrayList<>();
     public ToDoFragment() {
     }
 
@@ -57,7 +58,9 @@ public class ToDoFragment extends ListFragment {
         mListViewTasks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getActivity(), "Le clickeaste", Toast.LENGTH_SHORT).show();
+                Task task = (Task) parent.getItemAtPosition(position);
+                String message = String.format(getString(R.string.message_received),task.getTittle() );
+                Toast.makeText(getActivity(), message , Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -91,10 +94,14 @@ public class ToDoFragment extends ListFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Task task = new Task();
         if(data!=null){
-            Toast.makeText(getActivity(), data.getExtras().getString("taskTitle"), Toast.LENGTH_LONG).show();
+            String message = String.format(getString(R.string.getting_task), data.getExtras().getString("taskTitle"));
+            Toast.makeText(getActivity(),message , Toast.LENGTH_LONG).show();
+            task.setTittle(data.getExtras().getString("taskTitle"));
+            mAdapter.add(task);
         } else {
-            Toast.makeText(getActivity(), "Nada, Sorry :(", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "Nothing to show, Sorry :(", Toast.LENGTH_LONG).show();
         }
     }
 }

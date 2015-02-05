@@ -8,5 +8,7 @@
     <string name="text_view_task_title">Task title</string>
     <string name="button_done">Done</string>
     <string name="text_view_creat_task_tittle">Create your task</string>
+    <string name="message_received">Task selected: %s</string>
+    <string name="getting_task">Task %s added to the list</string>
 
 </resources>
